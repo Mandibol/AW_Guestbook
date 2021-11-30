@@ -1,0 +1,19 @@
+{
+  "name": "aw_guestbook",
+  "version": "1.0.0",
+  "description": "Guestbook homework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "guestbook",
+    "comments"
+  ],
+  "author": "Alexander Wallberg",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security"
+  }
+}
