@@ -7,31 +7,70 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/process_post" method="post" id="commentForm">
-        <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Skriv här:"></textarea>
+    <form id="commentForm">
+        <input type="text" name="userName" id="userName" placeholder="Användarnamn:" required><br>
+        <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Skriv här:" required></textarea>
         <br>
-        <input type="submit">
+        <input type="submit" value="Skicka">
     </form>
 
     <h1>Kommentarer:</h1>
     <p id="comments">Test</p>
     
     <script>
-        let posts = [];
-        let displayHTML = "";
-        const client = new XMLHttpRequest();
-        client.open('GET', 'posts.txt', true);
-        client.onload= function() {
-            posts = JSON.parse(client.responseText);            
-            
-            for (let i = 0; i < posts.length; i++) {
-                displayHTML += "<p>" + posts[i].comment + "</p>";
-            }
-            document.getElementById("comments").innerHTML = displayHTML;
-        }
-        client.send();
+        window.onload = () => {
+            const client = new XMLHttpRequest();
+                client.open('post', '/ajax', true);
+                client.onload= () => {
+                    let posts = [];
+                    let displayHTML = "";
+                    posts = JSON.parse(client.responseText);            
+                    
+                    for (let i = 0; i < posts.length; i++) {
+                        displayHTML += "<p>" + posts[i].date + "</p>";
+                        displayHTML += "<p>" + posts[i].userName + "</p>";
+                        displayHTML += "<p>" + posts[i].comment + "</p>";
+                    }
+                    document.getElementById("comments").innerHTML = displayHTML;
+                };
+                client.setRequestHeader("Content-type", "application/json; charset=utf-8");
+                client.send();
 
 
+            document.getElementById("commentForm").addEventListener("submit", function(evt){
+                evt.preventDefault();
+                
+                //Store form inputs in object
+                const objForm = {};
+                objForm.userName = document.getElementById("userName").value;
+                objForm.comment = document.getElementById("comment").value;
+                //Convert Object to JSON String
+                const formJSON = JSON.stringify(objForm);
+                console.log(formJSON);
+
+                const client = new XMLHttpRequest();
+                client.open('post', '/process_post', true);
+                client.onload= () => {
+                    let posts = [];
+                    let displayHTML = "";
+                    posts = JSON.parse(client.responseText);            
+                    
+                    for (let i = 0; i < posts.length; i++) {
+                        displayHTML += "<p>" + posts[i].date + "</p>";
+                        displayHTML += "<p>" + posts[i].userName + "</p>";
+                        displayHTML += "<p>" + posts[i].comment + "</p>";
+                    }
+                    document.getElementById("comments").innerHTML = displayHTML;
+                };
+                client.setRequestHeader("Content-type", "application/json; charset=utf-8");
+                client.send(formJSON);
+
+                document.getElementById("comment").value = "";
+                document.getElementById("userName").value = "";
+            });
+
+
+        };
     </script>
     
 </body>
