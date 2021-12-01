@@ -1,0 +1,103 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+/*Form style*/
+input, textarea {
+    width: 100%;
+    resize: none;
+    padding: 0.5em;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+#comments h3, h4 {
+    white-space: nowrap;
+    padding: 0.5em;
+    margin: 0;
+    background-color: darkcyan;
+    font-size: medium;
+    width: 50%;
+    float: left;
+    text-align: left;
+}
+#comments h4 {
+text-align: right;
+}
+
+#comments p {
+    width: 100%;
+    clear: both;
+    padding: 0.5em;
+    margin: 0;
+}
+
+#comments section{
+    border: 1pt solid darkcyan;
+    margin-bottom: 4px;
+    padding: 0;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Grid Objects and Properties*/
+main {
+    grid-area: main;
+    background-color: white;
+    padding: 0.5em;
+}
+header {
+    grid-area: header;
+    background-color: darkcyan;
+    text-align: center;
+    height: fit-content;
+}
+
+footer {
+    grid-area: footer;
+    background-color: darkcyan;
+    text-align: center;
+}
+
+body {
+    background-color: cadetblue;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr minmax(800px, 2fr) 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 
+    'header header header'
+    '. main .'
+    'footer footer footer'
+    ;
+}
+
+@media screen and (max-width: 800px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        'header'
+        'main'
+        'footer'
+        ;
+    }
+    #comments h3, h4 {
+        width: 100%;
+        text-align: left;
+    }
+
+    #comments h4 {
+        text-align: left;
+        font-size: small;
+        }
+}
