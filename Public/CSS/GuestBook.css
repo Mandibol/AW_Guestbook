@@ -43,7 +43,7 @@ form {
 }
 
 #comments h3, h4 {
-    padding: 0.5em;
+    padding: 8px;
     margin: 0;
     background-color: darkcyan;
     color: white;
@@ -53,14 +53,12 @@ form {
 }
 
 #comments p {
-    width: 100%;
-    clear: both;
-    padding: 0.5em;
+    padding: 8px;
     margin: 0;
+    border: 1pt solid darkcyan;
 }
 
 #comments section{
-    border: 1pt solid darkcyan;
     margin: 4px;
 }
 
@@ -74,7 +72,7 @@ img {
 main {
     grid-area: main;
     background-color: white;
-    padding: 0.5em;
+    padding: 8px;
 }
 header {
     grid-area: header;
