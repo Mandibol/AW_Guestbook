@@ -1,1 +1,0 @@
-[{"userName":"Guest","date":"2021-11-30T18:33:39.245Z","comment":"Hej!"},{"userName":"hej","comment":"datum test","date":"2021-12-01T13:31:45.913Z"},{"userName":"Datum","comment":"Test2","date":"2021-12-01T13:32:44.834Z"},{"userName":"asd","comment":"asdasd","date":"2021-12-01T15:22:58.279Z"},{"userName":"Alexander","comment":"Cool dude","date":"2021-12-01T16:42:07.210Z"}]

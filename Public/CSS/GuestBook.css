@@ -12,23 +12,44 @@ html, body {
 input, textarea {
     width: 100%;
     resize: none;
-    padding: 0.5em;
+    padding: 8px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
 
+h2 {
+    margin-top: 8px;
+    margin-bottom: 4px;
+    font-size: medium;
+}
+
+form {
+    padding: 4px;
+}
+
+#createUserForm, #commentForm {
+    display: none;
+}
+
+.fLink {
+    color: darkcyan;
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.fLink:hover {
+    color: darkorange;
+    cursor: pointer;
+}
+
 #comments h3, h4 {
-    white-space: nowrap;
     padding: 0.5em;
     margin: 0;
     background-color: darkcyan;
-    font-size: medium;
-    width: 50%;
-    float: left;
+    color: white;
+    font-size: small;
+    width: 100%;
     text-align: left;
-}
-#comments h4 {
-text-align: right;
 }
 
 #comments p {
@@ -40,8 +61,7 @@ text-align: right;
 
 #comments section{
     border: 1pt solid darkcyan;
-    margin-bottom: 4px;
-    padding: 0;
+    margin: 4px;
 }
 
 img {
@@ -59,6 +79,7 @@ main {
 header {
     grid-area: header;
     background-color: darkcyan;
+    color: white;
     text-align: center;
     height: fit-content;
 }
@@ -66,6 +87,7 @@ header {
 footer {
     grid-area: footer;
     background-color: darkcyan;
+    color: white;
     text-align: center;
 }
 
@@ -91,13 +113,4 @@ body {
         'footer'
         ;
     }
-    #comments h3, h4 {
-        width: 100%;
-        text-align: left;
-    }
-
-    #comments h4 {
-        text-align: left;
-        font-size: small;
-        }
 }
