@@ -1,1 +1,17 @@
-[{"name":"Mandibol","email":"test@test.com","psw":"Abcd1234!"}]
+[
+  {
+    "name": "Mandibol",
+    "email": "test@test.com",
+    "psw": "Abcd1234!"
+  },
+  {
+    "name": "Abc",
+    "email": "a@a",
+    "psw": "Abcd1234"
+  },
+  {
+    "name": "kissen",
+    "email": "m@l",
+    "psw": "Abcd1234"
+  }
+]

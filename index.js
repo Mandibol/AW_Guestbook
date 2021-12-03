@@ -34,13 +34,13 @@ app.post("/process_post",(req,res) => {
     fs.readFile(postsPath, (err,data) =>{
         if (err) throw err;
         //Create Array from data
-        let posts = JSON.parse(data);
+        let postsArray = JSON.parse(data);
         //Escape bad html chars
-        let reqTemp = escapeObj(req.body);
+        let reqObj = escapeObj(req.body);
         //Add comment to array
-        posts.push(reqTemp);
+        postsArray.push(reqObj);
         //Replace posts.json with updated array
-        fs.writeFile(postsPath, JSON.stringify(posts), (err) => {
+        fs.writeFile(postsPath, JSON.stringify(postsArray, null,2), (err) => {
             if (err) throw err;
             res.end();
         });
@@ -51,71 +51,71 @@ app.post("/process_post",(req,res) => {
 app.post("/refresh_posts", (req,res) => {
     fs.readFile(postsPath, (err,data) =>{
         if (err) throw err;
-        let posts = JSON.parse(data);
-        res.send(posts);
+        let postsArray = JSON.parse(data);
+        res.send(postsArray);
     });
 });
 
 //Create new user
 app.post("/create_user", (req,res) => {
     //Escape Bad html
-    let newUser = escapeObj(req.body);
+    let newUserObj = escapeObj(req.body);
     fs.readFile('users.json', (err,data) =>{
         if (err) throw err;
-        const users = JSON.parse(data);
+        const usersArray = JSON.parse(data);
         //Check against existing user if name or email is in use
-        const checkName = users.find(obj => obj.name === newUser.name);
-        const checkEmail = users.find(obj => obj.email === newUser.email);
+        const checkName = usersArray.find(obj => obj.name === newUserObj.name);
+        const checkEmail = usersArray.find(obj => obj.email === newUserObj.email);
 
-        let answer = {};
+        let resObj = {};
         if (checkEmail === undefined && checkName === undefined) {
-            answer.alert = "Grattis ditt konto är skapat. Du kan nu logga in";
-            answer.success = true;
-            users.push(newUser);
-            fs.writeFile('users.json', JSON.stringify(users), (err) => {
+            resObj.alert = "Grattis ditt konto är skapat. Du kan nu logga in";
+            resObj.success = true;
+            usersArray.push(newUserObj);
+            fs.writeFile('users.json', JSON.stringify(usersArray, null, 2), (err) => {
                 if (err) throw err;
             });
         }
         else if (checkName !== undefined && checkEmail !== undefined){
-            answer.alert = "Ånej Användarnamnet är upptaget\nDet finns redan ett konto med den mejladdressen";
-            answer.success = false;
+            resObj.alert = "Ånej Användarnamnet är upptaget\nDet finns redan ett konto med den mejladdressen";
+            resObj.success = false;
         }
         else if (checkEmail !== undefined){
-            answer.alert = "Det finns redan ett konto med den mejladdressen";
-            answer.success = false;
+            resObj.alert = "Det finns redan ett konto med den mejladdressen";
+            resObj.success = false;
         }
         else if (checkName !== undefined){
-            answer.alert = "Ånej Användarnamnet är upptaget";
-            answer.success = false;
+            resObj.alert = "Ånej Användarnamnet är upptaget";
+            resObj.success = false;
         }
-        res.send(JSON.stringify(answer));
+        res.send(JSON.stringify(resObj));
     });
 });
 
 //Login
 app.post("/login", (req,res) => {
-    let login = escapeObj(req.body);
+    let loginObj = escapeObj(req.body);
     fs.readFile('users.json', (err,data) =>{
         if (err) throw err;
-        const users = JSON.parse(data);
+        const usersArray = JSON.parse(data);
         //Check against existing user if name and psw match
-        const checkName = users.find(obj => obj.name === login.name);
-        let answer = {};
+        const userObj = usersArray.find(obj => obj.name === loginObj.name);
+        let resObj = {};
 
-        if (checkName !== undefined){
-            if (checkName.psw === login.psw){
-                answer.name = checkName.name;
-                answer.login = true;
+        if (userObj){
+            if (userObj.psw === loginObj.psw){
+                resObj.name = userObj.name;
+                resObj.login = true;
             }
             else {
-                answer.alert = "Fel Lösenord"
-                answer.login = false;
+                resObj.alert = "Fel Lösenord";
+                resObj.login = false;
             }
         }
         else {
-            answer.alert = "Finns ingen användare med det namnet"
-            answer.login = false;
+            resObj.alert = "Finns ingen användare med det namnet"
+            resObj.login = false;
         }
-        res.send(JSON.stringify(answer));
+        res.send(JSON.stringify(resObj));
     });
 });
