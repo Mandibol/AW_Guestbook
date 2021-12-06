@@ -12,14 +12,11 @@ console.log("Kör servern på localhost:3000");
 
 const postsPath = 'posts.json';
 
-//Functions to escape bad html
-function escapeHTML(str) {
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-}
-function escapeObj(obj) {
+//Function to escape bad html
+function escapeHTML(obj) {
     const tempObj = obj;
     for (let x in obj) {
-        tempObj[x] = escapeHTML(obj[x]);
+        tempObj[x] = (obj[x]).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     };
     return tempObj;
 }
@@ -32,11 +29,13 @@ app.get("/", (req,res) => {
 //Manage comment request
 app.post("/process_post",(req,res) => {
     fs.readFile(postsPath, (err,data) =>{
-        if (err) throw err;
-        //Create Array from data
-        let postsArray = JSON.parse(data);
+        let postsArray = [];
+        if (!err) {
+            //Create Array from data
+            postsArray = JSON.parse(data);
+        }
         //Escape bad html chars
-        let reqObj = escapeObj(req.body);
+        let reqObj = escapeHTML(req.body);
         //Add comment to array
         postsArray.push(reqObj);
         //Replace posts.json with updated array
@@ -50,8 +49,11 @@ app.post("/process_post",(req,res) => {
  //Refresh Comment field
 app.post("/refresh_posts", (req,res) => {
     fs.readFile(postsPath, (err,data) =>{
-        if (err) throw err;
-        let postsArray = JSON.parse(data);
+        let postsArray = [];
+        if (!err) {
+            //Create Array from data
+            postsArray = JSON.parse(data);
+        }
         res.send(postsArray);
     });
 });
@@ -59,7 +61,7 @@ app.post("/refresh_posts", (req,res) => {
 //Create new user
 app.post("/create_user", (req,res) => {
     //Escape Bad html
-    let newUserObj = escapeObj(req.body);
+    let newUserObj = escapeHTML(req.body);
     fs.readFile('users.json', (err,data) =>{
         if (err) throw err;
         const usersArray = JSON.parse(data);
@@ -94,7 +96,7 @@ app.post("/create_user", (req,res) => {
 
 //Login
 app.post("/login", (req,res) => {
-    let loginObj = escapeObj(req.body);
+    let loginObj = escapeHTML(req.body);
     fs.readFile('users.json', (err,data) =>{
         if (err) throw err;
         const usersArray = JSON.parse(data);
