@@ -6,9 +6,12 @@ let fs = require("fs");
 app.use(express.static("Public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.listen(3000);
-console.log("Kör servern på localhost:3000");
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);
 
 const postsPath = 'posts.json';
 
